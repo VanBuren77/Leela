@@ -5,19 +5,68 @@
 Leela Command Line Interface
 
 Usage:
-    leela run_test <test_number>
-    leela run_all_tests
-    leela build_db [options]
-    leela delete_db
-    leela update_database
-    leela query_db
-    leela backtest
+	leela run_test <test_number>
+	leela run_all_tests
+	leela build_db [options]
+	leela delete_db
+	leela update_database
+	leela query_db
+	leela backtest
 
 Options:
-    --full
+	--full
 """
 
-
+from docopt import docopt
 
 from leela.cli.commands.download_freddie_mac import download_freddie_mac
 from leela.cli.commands.download_fannie_mae import download_fannie_mae
+from leela.cli.commands.build_db import build_db
+from leela.cli.commands.delete_db import delete_db
+from leela.cli.commands.run_all_tests import run_all_tests
+from leela.cli.commands.run_test import run_test
+from leela.cli.commands.query_db import query_db
+
+# -------------------------------------------------------------------------------- #
+#   #TODO:
+# -------------------------------------------------------------------------------- #
+#       1. Build backtester
+#       2. Fix database / Alpaca refresh
+#       3. Get deployment service to Linnode & live trading
+#       4. Make unit tester
+#       5. Standardize system data packet
+#       6. 
+# -------------------------------------------------------------------------------- #
+
+def main():
+	
+	# Can add real commands from CLI here.
+
+	args = docopt(__doc__, help=True)
+	
+	if args['run_test']:
+		run_test()
+	elif args['run_all_tests']:
+		run_all_tests()
+		# unit_tests.run_all_tests()
+	elif args['build_db']:
+		build_db()
+	elif args['delete_db']:
+		delete_db()
+	elif args['query_db']:
+		query_db()
+	elif args['download_fannie_mae']:
+		download_fannie_mae()
+
+
+def main():
+	pass
+
+if __name__ == "__main__":
+
+	DEBUG = True
+	
+	if DEBUG:
+		print("DEBUG TEST")
+	else:
+		main()
