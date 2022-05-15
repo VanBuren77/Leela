@@ -1,8 +1,7 @@
 
 
-
+from leela.config import config
 import os
 
 def stop_db():
-    if os.name == 'windows':
-        os.system('cmd /c pg_ctl')
+    os.system(f"pg_ctl stop -D \"{config.POSTGRES_DIR}\"")
