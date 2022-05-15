@@ -1,0 +1,16 @@
+DROP TABLE loans_raw_freddie;
+DROP TABLE loans_raw_fannie;
+DROP TABLE loans;
+DROP TABLE fannie_harp_mapping;
+DROP TABLE agencies;
+DROP TABLE servicers;
+DROP TABLE monthly_observations_raw_freddie;
+DROP TABLE monthly_observations_raw_fannie;
+DROP TABLE monthly_observations;
+DROP TABLE zero_balance_monthly_observations;
+DROP VIEW loan_monthly;
+DROP FUNCTION cpr(numeric);
+DROP TABLE hpi_indexes;
+DROP TABLE hpi_values;
+DROP TABLE mortgage_rates;
+DROP TABLE raw_msa_county_mappings;
