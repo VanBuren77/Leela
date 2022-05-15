@@ -43,7 +43,7 @@ from leela.cli.commands.query_db import query_db
 from leela.config import config
 
 # --------------------------------------------------------------------- #
-#   #TODO:
+#   TODO:
 # --------------------------------------------------------------------- #
 #   1. Load Fannie/Freddie Data
 #   2. Foo()
