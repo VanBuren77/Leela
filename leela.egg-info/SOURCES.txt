@@ -1,7 +1,0 @@
-README.md
-setup.py
-leela.egg-info/PKG-INFO
-leela.egg-info/SOURCES.txt
-leela.egg-info/dependency_links.txt
-leela.egg-info/requires.txt
-leela.egg-info/top_level.txt
