@@ -1,4 +1,5 @@
 data/
+leela/config/
 leela/config/config.py
 agency-loan-master/
 leela.egg-info/
