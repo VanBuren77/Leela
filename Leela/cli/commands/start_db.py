@@ -13,6 +13,7 @@ def start_db():
     print()
     print("------- Starting Postgres Server -------")
     print()
+    
     # /app_folder_location_of_postgresql_database_server/bin/pg_ctl 
     # -D /data_folder_location_of_postgresql_database_server operation_parameter
     # C:/Program Files/PostgreSQL/14/data
@@ -23,5 +24,6 @@ def start_db():
         # postgres_service_name = "postgresql-x64-14"
         os.system(f"pg_ctl start -D \"{config.POSTGRES_DIR}\"")
     else:
+        # Can manage with dockerfile
         print("Foo(): linux")
         pass

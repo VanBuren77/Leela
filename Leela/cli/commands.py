@@ -23,7 +23,8 @@ Options:
     --full
 """
 
-from tracemalloc import start
+
+import os
 from docopt import docopt
 
 from leela.cli.commands.start_db import start_db
@@ -38,6 +39,8 @@ from leela.cli.commands.delete_db import delete_db
 from leela.cli.commands.run_all_tests import run_all_tests
 from leela.cli.commands.run_test import run_test
 from leela.cli.commands.query_db import query_db
+
+from leela.config import config
 
 # --------------------------------------------------------------------- #
 #   #TODO:
@@ -78,6 +81,10 @@ if __name__ == "__main__":
 
     DEBUG = False
     
+    # Set Postgres SQL options ->
+
+    os.environ["PGDATA"] = config.POSTGRES_DIR
+
     if DEBUG:
         print("DEBUG TEST")
     else:

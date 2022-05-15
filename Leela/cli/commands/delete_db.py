@@ -4,5 +4,8 @@
 
 
 
+from leela.database.database import Database
+
+
 def delete_db():
-    pass
+    Database.delete_database()

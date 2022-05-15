@@ -114,6 +114,7 @@ CREATE TABLE fannie_harp_mapping (
   pre_harp_loan_sequence_number text primary key,
   post_harp_loan_sequence_number text
 );
+
 CREATE UNIQUE INDEX index_fannie_harp ON fannie_harp_mapping (post_harp_loan_sequence_number);
 
 CREATE TABLE agencies (
@@ -121,8 +122,7 @@ CREATE TABLE agencies (
   name varchar
 );
 
-INSERT INTO agencies
-VALUES (0, 'Fannie Mae'), (1, 'Freddie Mac');
+INSERT INTO agencies VALUES (0, 'Fannie Mae'), (1, 'Freddie Mac');
 
 CREATE TABLE servicers (
   id serial primary key,
@@ -251,7 +251,7 @@ FROM loans l
     ON l.id = m.loan_id;
 
 CREATE OR REPLACE FUNCTION cpr(numeric) RETURNS numeric
-  AS 'SELECT (1.0 - pow(1.0 - $1, 12)) * 100;'
+  AS 'SELECT (1.0 - pow(1.0 - $1, 12)) * 100'
   LANGUAGE SQL
   IMMUTABLE
   RETURNS NULL ON NULL INPUT;
