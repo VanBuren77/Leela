@@ -5,16 +5,16 @@
 Leela Command Line Interface
 
 Usage:
-	leela run_test <test_number>
-	leela run_all_tests
-	leela build_db [options]
-	leela delete_db
-	leela update_database
-	leela query_db
-	leela backtest
+    leela run_test <test_number>
+    leela run_all_tests
+    leela build_db [options]
+    leela delete_db
+    leela update_database
+    leela query_db
+    leela backtest
 
 Options:
-	--full
+    --full
 """
 
 from docopt import docopt
@@ -30,43 +30,37 @@ from leela.cli.commands.query_db import query_db
 # -------------------------------------------------------------------------------- #
 #   #TODO:
 # -------------------------------------------------------------------------------- #
-#       1. Build backtester
-#       2. Fix database / Alpaca refresh
-#       3. Get deployment service to Linnode & live trading
-#       4. Make unit tester
-#       5. Standardize system data packet
-#       6. 
+#   1. Load Fannie/Freddie Data
+#   2. 
 # -------------------------------------------------------------------------------- #
 
 def main():
-	
-	# Can add real commands from CLI here.
+    
+    # Can add real commands from CLI here.
 
-	args = docopt(__doc__, help=True)
-	
-	if args['run_test']:
-		run_test()
-	elif args['run_all_tests']:
-		run_all_tests()
-		# unit_tests.run_all_tests()
-	elif args['build_db']:
-		build_db()
-	elif args['delete_db']:
-		delete_db()
-	elif args['query_db']:
-		query_db()
-	elif args['download_fannie_mae']:
-		download_fannie_mae()
-
+    args = docopt(__doc__, help=True)
+    
+    if args['run_test']:
+        run_test()
+    elif args['run_all_tests']:
+        run_all_tests()
+    elif args['build_db']:
+        build_db()
+    elif args['delete_db']:
+        delete_db()
+    elif args['query_db']:
+        query_db()
+    elif args['download_fannie_mae']:
+        download_fannie_mae()
 
 def main():
-	pass
+    pass
 
 if __name__ == "__main__":
 
-	DEBUG = True
-	
-	if DEBUG:
-		print("DEBUG TEST")
-	else:
-		main()
+    DEBUG = True
+    
+    if DEBUG:
+        print("DEBUG TEST")
+    else:
+        main()
