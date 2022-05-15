@@ -19,6 +19,8 @@ Options:
 
 from docopt import docopt
 
+from leela.cli.commands.load_freddie_to_db import load_freddie_to_db
+from leela.cli.commands.load_fannie_to_db import load_fannie_to_db
 from leela.cli.commands.download_freddie_mac import download_freddie_mac
 from leela.cli.commands.download_fannie_mae import download_fannie_mae
 from leela.cli.commands.build_db import build_db
@@ -36,8 +38,6 @@ from leela.cli.commands.query_db import query_db
 
 def main():
     
-    # Can add real commands from CLI here.
-
     args = docopt(__doc__, help=True)
     
     if args['run_test']:
@@ -50,15 +50,19 @@ def main():
         delete_db()
     elif args['query_db']:
         query_db()
+    elif args['load_fannie_to_db']:
+        load_fannie_to_db()
+    elif args['load_freddie_to_db']:
+        load_freddie_to_db()
     elif args['download_fannie_mae']:
         download_fannie_mae()
+    elif args['download_freddie_mac']:
+        download_fannie_mae()
 
-def main():
-    pass
 
 if __name__ == "__main__":
 
-    DEBUG = True
+    DEBUG = False
     
     if DEBUG:
         print("DEBUG TEST")
