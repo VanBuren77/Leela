@@ -4,7 +4,7 @@ from pathlib import Path
 import psycopg
 import os
 import sys
-
+from leela.config import config
 
 class Database:
 
@@ -50,6 +50,17 @@ class Database:
     @staticmethod
     def build_database():
         
+        os.system(f"""
+                cmd /k 
+                "
+                    createdb agency-loan-level passwd={config.POSTGRES_PW} & 
+                    type data/hpi_index_codes.txt | psql agency-loan-level -c "COPY hpi_indexes FROM stdin DELIMITER '|' NULL '';" &
+                    type data/interpolated_hpi_values.txt | psql agency-loan-level -c "COPY hpi_values FROM stdin DELIMITER '|' NULL '';" &
+                    type data/pmms.csv | psql agency-loan-level -c "COPY mortgage_rates FROM stdin NULL '' CSV HEADER;" &
+                    type data/msa_county_mapping.csv | psql agency-loan-level -c "COPY raw_msa_county_mappings FROM stdin NULL '' CSV HEADER;" &
+                "
+        """)
+
         sql_statements = open(r"leela\database\sql\build_db.sql").read().split(';')
         
         with psycopg.connect("dbname=test user=postgres") as conn:

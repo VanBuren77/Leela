@@ -1,3 +1,14 @@
+
+
+
+
+
+-- EEL: Do i need the build DB step?
+-- CREATE DATABASE myDatabase 
+-- WITH ENCODING 'UTF8' 
+-- LC_COLLATE='English_United Kingdom' 
+-- LC_CTYPE='English_United Kingdom'
+
 CREATE TABLE loans_raw_freddie (
   credit_score text,
   first_payment_date integer,
