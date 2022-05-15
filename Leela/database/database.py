@@ -63,13 +63,14 @@ class Database:
 
         sql_statements = open(r"leela\database\sql\build_db.sql").read().split(';')
         
-        with psycopg.connect("dbname=test user=postgres") as conn:
+        with psycopg.connect(f"dbname={config.POSTGRES_DB_NAME} user={config.POSTGRES_USER}") as conn:
             with conn.cursor() as cur:
-
+                
                 for sql in sql_statements:
                     print("-------- Executing SQL --------")
                     print(sql)
                     cur.execute(sql)
+
             conn.commit()
 
 
