@@ -12,8 +12,8 @@ Usage:
     leela build_db [options]
     leela delete_db
     leela query_db
-    leela load_freddie_to_db
-    leela load_fannie_to_db
+    leela load_freddie
+    leela load_fannie
     leela download_freddie_mac
     leela download_fannie_mae
     leela update_database
@@ -31,7 +31,7 @@ from leela.cli.commands.start_db import start_db
 from leela.cli.commands.stop_db import stop_db
 from leela.cli.commands.load_freddie_to_db import load_freddie_to_db
 from leela.cli.commands.load_freddie_to_db import load_freddie_to_db
-from leela.cli.commands.load_fannie_to_db import load_fannie_to_db
+from leela.cli.commands.load_fannie import load_fannie
 from leela.cli.commands.download_freddie_mac import download_freddie_mac
 from leela.cli.commands.download_fannie_mae import download_fannie_mae
 from leela.cli.commands.build_db import build_db
@@ -67,8 +67,8 @@ def main():
         delete_db()
     elif args['query_db']:
         query_db()
-    elif args['load_fannie_to_db']:
-        load_fannie_to_db()
+    elif args['load_fannie']:
+        load_fannie()
     elif args['load_freddie_to_db']:
         load_freddie_to_db()
     elif args['download_fannie_mae']:
@@ -78,7 +78,9 @@ def main():
 
 
 if __name__ == "__main__":
-
+    
+    # https://capitalmarkets.fanniemae.com/credit-risk-transfer/single-family-credit-risk-transfer/fannie-mae-single-family-loan-performance-data
+    
     DEBUG = False
     
     # Set Postgres SQL options ->

@@ -5,43 +5,52 @@ import psycopg
 import os
 import sys
 from leela.config import config
+import psycopg2
+from psycopg2 import Error
 
-
-
-
-
+import pprint
 
 # The steps below are a standard approach. The steps will vary according to specific requirements, and may require a more customised approach
-
 # Step 1 - Identify current data directory path 
-
 # SHOW data_directory;
-
 # Step 2- Stop Postgresql services
-
 # systemctl status  <service_name>
-
 # systemctl stop <service_name>
-
 # Step 3 - create a blank directory on the target path 
-
-# e.g    mkdir /mydirectory/data
-
+# e.g mkdir /mydirectory/data
 # --change ownership to the postgres user , for example
-
 # chown  postgres:postgres /mypostgres/data
-
 # Step 4 - Use initdb to create  creates a new PostgreSQL database cluster
-
 # ./initdb -D /mydirectory/data
-
 # The -D option specifies the directory where the database cluster should be stored
+# initdb creates a new database cluster. 
+# The initdb command has a number of other switches to customise the setup. Check the documentation for extra details 
 
-# initdb creates a new database cluster . The initdb command has a number of other switches to customise the setup. Check the documentation for extra details 
-
- 
 
 class Database:
+
+    @staticmethod
+    def get_connection():
+        try:
+            print()
+            print("-----------------------------")
+            print("PostgreSQL server information")
+            print("-----------------------------")
+            connection = psycopg2.connect(user=config.POSTGRES_USER,
+                                          password=config.POSTGRES_PW,
+                                          host=config.POSTGRES_HOST,
+                                          port=config.POSTGRES_PORT,
+                                          database=config.POSTGRES_DB_NAME)
+            pprint.pprint(connection.get_dsn_parameters())
+            print()
+            cursor = connection.cursor()
+            cursor.execute("SELECT version();")
+            record = cursor.fetchone()
+            print("You are connected to - ", record, "\n")
+            cursor.close()
+        except (Exception, Error) as error:
+            print("Error while connecting to PostgreSQL", error)
+        return connection
 
     @staticmethod
     def start_server():
@@ -82,7 +91,6 @@ class Database:
             print(command)
             os.system(command)
 
-        sys.exit()
         sql_statements = open(r"leela\database\sql\build_db.sql").read().split(';')
         
         with psycopg.connect(f"dbname={config.POSTGRES_DB_NAME} user={config.POSTGRES_USER}") as conn:
@@ -111,9 +119,10 @@ class Database:
                     print(sql.strip("\n"))
                     cur.execute(sql)
             conn.commit()
-
-        print("Dropping Database.")
-        os.system(f"dropdb {config.POSTGRES_DB_NAME}")
+        
+        # No need to drop db, just wipe tables...
+        # print("Dropping Database.")
+        # os.system(f"dropdb {config.POSTGRES_DB_NAME}")
 
     @staticmethod
     def load_fannie_data():
