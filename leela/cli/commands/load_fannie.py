@@ -77,7 +77,7 @@ def load_fannie():
 
     print(f"All Done.")
 
-
+    # 394,043,880
     # Load file from STD IN ->
 
 
