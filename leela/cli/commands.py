@@ -78,9 +78,9 @@ def main():
 
 
 if __name__ == "__main__":
-    
+    # References ->
+    # https://www.johnhcochrane.com/
     # https://capitalmarkets.fanniemae.com/credit-risk-transfer/single-family-credit-risk-transfer/fannie-mae-single-family-loan-performance-data
-    
     DEBUG = False
     
     # Set Postgres SQL options ->

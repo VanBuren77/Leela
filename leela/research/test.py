@@ -33,16 +33,21 @@ from leela.database.database import Database
 
 # https://docs.fhnfinancial.com/?0d8a7e7e-2521-43f7-a527-b8786452b172
 
-def main():
+def main_dep():
     # filters = [""]
     start_date = "2021-03-01"
     filter = "original_interest_rate >= 2.5 and original_interest_rate <= 4.5"
     filter += " and  201000 < original_upb and  225000 > original_upb"
     filter += " and monthly_reporting_period = '2021-12-01' "
-    data = Database.get_model_input(start_date, my_filter=filter)
+    data = Database.get_model_input(start_date, my_filter=filter, DEBUG=True)
     print(data)
     print(len(data))
 
+    # Type here ->
+    data.to_csv(r"C:\Projects\GitHub\Leela\leela\research\Nikita\data\sample.csv")
+
+def main():
+    print()
 
 if __name__ == "__main__":
     main()

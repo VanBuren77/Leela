@@ -1,14 +1,15 @@
+from pathlib import Path
+from leela.config import config
 import pandas as pd
 import numpy as np
-from pathlib import Path
-import psycopg
 import os
 import sys
-from leela.config import config
-import psycopg2
-from psycopg2 import Error
-
+import psycopg
+from psycopg import Error
 import pprint
+from dateutil import parser
+
+# import psycopg2 # from psycopg2 import Error
 
 # The steps below are a standard approach. The steps will vary according to specific requirements, and may require a more customised approach
 # Step 1 - Identify current data directory path 
@@ -26,37 +27,58 @@ import pprint
 # initdb creates a new database cluster. 
 # The initdb command has a number of other switches to customise the setup. Check the documentation for extra details 
 
+# import psycopg2
 
+# #establishing the connection
+# conn = psycopg2.connect(
+#    database="postgres", user='postgres', password='password', host='127.0.0.1', port= '5432'
+# )
+# #Creating a cursor object using the cursor() method
+# cursor = conn.cursor()
+
+# #Executing an MYSQL function using the execute() method
+# cursor.execute("select version()")
+
+# # Fetch a single row using fetchone() method.
+# data = cursor.fetchone()
+# print("Connection established to: ",data)
+
+# #Closing the connection
+# conn.close()
+# Connection established to: (
+#    'PostgreSQL 11.5, compiled by Visual C++ build 1914, 64-bit',
+# )
+
+import psycopg2
 class Database:
 
     @staticmethod
-    def get_connection():
-        try:
-            print()
-            print("-----------------------------")
-            print("PostgreSQL server information")
-            print("-----------------------------")
-            connection = psycopg2.connect(user=config.POSTGRES_USER,
-                                          password=config.POSTGRES_PW,
-                                          host=config.POSTGRES_HOST,
-                                          port=config.POSTGRES_PORT,
-                                          database=config.POSTGRES_DB_NAME)
+    def get_connection(DEBUG=False):
+        print()
+        print("-----------------------------")
+        print("PostgreSQL server information")
+        print("-----------------------------")
+        
+        connection = psycopg2.connect(user=config.POSTGRES_USER,
+                                        password=config.POSTGRES_PW,
+                                        host=config.POSTGRES_HOST,
+                                        port=config.POSTGRES_PORT,
+                                        database=config.POSTGRES_DB_NAME)
+        
+        if DEBUG:
             pprint.pprint(connection.get_dsn_parameters())
             print()
-            cursor = connection.cursor()
-            cursor.execute("SELECT version();")
-            record = cursor.fetchone()
-            print("You are connected to - ", record, "\n")
-            cursor.close()
-        except (Exception, Error) as error:
-            print("Error while connecting to PostgreSQL", error)
+        cursor = connection.cursor()
+        cursor.execute("SELECT version();")
+        record = cursor.fetchone()
+        print("You are connected to - ", record, "\n")
+        cursor.close()
         return connection
 
     @staticmethod
     def start_server():
         print("---------- Starting Server ----------")
         os.system(f"pg_ctl start -D \"{config.POSTGRES_DIR}\"")
-
 
     @staticmethod
     def get_server_status():
@@ -139,3 +161,52 @@ class Database:
     @staticmethod
     def update_freddie_data():
         pass
+
+    @staticmethod
+    def get_raw_data(start_date, end_date=None, filter=None, ascending=False, DEBUG=False):
+        # connection = psycopg.connect(config.POSTGRES_DB_NAME)
+        # connection.row_factory = psycopg.Row
+
+        if ascending:
+            date_order_sql = "asc"
+        else:
+            date_order_sql = "desc"
+
+        # "where monthly_reporting_period > = {start_date}"""
+        # select count(*) from fannie_processed where monthly_reporting_period >= '2021-03-01';
+        # 108,166,456
+        # select count(*) fannie_processed where monthly_reporting_period >= '2021-03-01'  and original_interest_rate is between 2.5 and 4.5 desc;
+        # select count(*) from fannie_processed where monthly_reporting_period >= '2021-03-01' and original_interest_rate >= 2.5 and original_interest_rate <= 4.5;"
+        # 92,868,179
+        sql = f"""select * from fannie_processed where monthly_reporting_period >= '{start_date}' """
+        # 201-225k
+        # 176-200k
+        # 151-175k
+        # 111-150k HLB
+        # 86-110k MLB
+        # 0-85k LLB
+
+        if filter is not None:
+            sql += " and " + filter
+
+        sql += f" order by monthly_reporting_period {date_order_sql};"
+        
+        if DEBUG:
+            print(sql)
+
+        res = pd.read_sql_query(sql, Database.get_connection())
+        # res["timestamp"] = pd.to_datetime(res["timestamp"])
+        # res = res.set_index(["symbol", "timestamp"])
+        return res
+
+    @staticmethod
+    def get_model_input(start, end=None, my_filter=None, scaled=False, DEBUG=False):
+        df = Database.get_raw_data(start, end, my_filter, DEBUG=False)
+        
+        # ------------------------- # 
+        # Add Additional Features ->
+        # ------------------------- #
+
+
+
+        return df
