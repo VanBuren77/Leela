@@ -30,24 +30,36 @@ from leela.database.database import Database
 # "2021-12-01"	816075
 
 # Resources ->
-
 # https://docs.fhnfinancial.com/?0d8a7e7e-2521-43f7-a527-b8786452b172
 
-def main_dep():
-    # filters = [""]
+# original_interest_rate >= 2.5 and original_interest_rate <= 3.5
+# and 201000 < original_upb and  225000 > original_upb
+#  and loan_age < 75
+#  and oltv < 90 and oltv > 75
+#  and monthly_reporting_period > '2021-03-01'
+#  --and loan_purpose = 'R'
+#  and original_loan_term = 360.0
+#  --group by loan_purpose;
+
+def main():
     start_date = "2021-03-01"
-    filter = "original_interest_rate >= 2.5 and original_interest_rate <= 4.5"
-    filter += " and  201000 < original_upb and  225000 > original_upb"
-    filter += " and monthly_reporting_period = '2021-12-01' "
+    filter = "original_interest_rate > 2.5 and original_interest_rate <= 3.5"
+    filter += " and 201000 < original_upb and  225000 > original_upb"
+    filter += " and loan_age < 180"
+    filter += " and oltv <= 95 and oltv > 75"
+    filter += " and original_loan_term = 360.0"
+    # filter += " and loan_purpose = 'R'"
     data = Database.get_model_input(start_date, my_filter=filter, DEBUG=True)
     print(data)
     print(len(data))
 
     # Type here ->
-    data.to_csv(r"C:\Projects\GitHub\Leela\leela\research\Nikita\data\sample.csv")
+    data.to_csv(r"C:\Projects\GitHub\Leela\leela\research\Nikita\data\30_yr.csv")
 
-def main():
-    print()
+# def main():
+    # data = Database.query_db("select * from fannie_processed where loan_id = '000097568237'")
+    # print(data)
 
 if __name__ == "__main__":
     main()
+    # main_dep()
