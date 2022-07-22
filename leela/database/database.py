@@ -201,7 +201,7 @@ class Database:
 
     @staticmethod
     def get_model_input(start, end=None, my_filter=None, scaled=False, DEBUG=False):
-        df = Database.get_raw_data(start, end, my_filter, DEBUG=False)
+        df = Database.get_raw_data(start, end, my_filter, DEBUG=DEBUG)
         
         # ------------------------- # 
         # Add Additional Features ->
@@ -210,3 +210,8 @@ class Database:
 
 
         return df
+
+    @staticmethod
+    def query_db(sql):
+        res = pd.read_sql_query(sql, Database.get_connection())
+        return res

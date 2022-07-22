@@ -43,7 +43,7 @@ from leela.database.database import Database
 
 def main():
     start_date = "2021-03-01"
-    filter = "original_interest_rate > 2.5 and original_interest_rate <= 3.5"
+    filter = "original_interest_rate >= 2.5 and original_interest_rate < 3.5"
     filter += " and 201000 < original_upb and  225000 > original_upb"
     filter += " and loan_age < 180"
     filter += " and oltv <= 95 and oltv > 75"

@@ -114,7 +114,7 @@
 
 
 CREATE TABLE raw_fannie (
-    reference_pool_id text,
+  reference_pool_id text,
   loan_id text,
   monthly_reporting_period text,
   channel text,

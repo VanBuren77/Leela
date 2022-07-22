@@ -11,7 +11,7 @@ import leela.config.config as config
 
 # import psycopg
 
-def load_fannie():
+def load_fannie(limit=None):
 
     db_name = "agency-loan-level"
     process_sql_file = "C:\Projects\GitHub\Leela\leela\database\sql\load_fannie.sql"
@@ -26,6 +26,9 @@ def load_fannie():
     FILE_LOAD_COUNTER = 0
     file_list = os.listdir(DATA_DIR)
     file_list.reverse()
+
+    if limit != None:
+        file_list = file_list[:limit]
 
     for file_name in file_list:
 
@@ -43,8 +46,8 @@ def load_fannie():
             # insert_raw_command = f"type {file_path} psql agency-loan-level COPY raw_fannie  FROM stdin DELIMITER '|' NULL '';"
             # analyze_command = f"""psql --dbname="{db_name}" --command="ANALYZE verbose fannie_processed;" """
             # set_utf_command = f"""psql --dbname="{db_name}" --command="SET CLIENT_ENCODING TO 'WIN1252';" """
-
             # set_utf_command = f"""psql --dbname="{db_name}" --command="SET CLIENT_ENCODING TO 'utf8';" """
+
             unzip_command = f"""7z e "{zip_file_path}" "-o{TEMP_ZIP_OUT_DIR}" """
             drop_index_command = f"""psql --dbname="{db_name}" --command="DROP INDEX IF EXISTS idx_loan_id_monthly_raw;" """
             unlog_command = f"""psql --dbname="{db_name}" --command="ALTER TABLE public.raw_fannie SET UNLOGGED;"  """

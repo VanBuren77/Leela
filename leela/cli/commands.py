@@ -14,6 +14,7 @@ Usage:
     leela query_db
     leela load_freddie
     leela load_fannie
+    leela load_fannie_sample
     leela download_freddie_mac
     leela download_fannie_mae
     leela update_database
@@ -69,12 +70,16 @@ def main():
         query_db()
     elif args['load_fannie']:
         load_fannie()
-    elif args['load_freddie_to_db']:
-        load_freddie_to_db()
+    elif args['load_fannie_sample']:
+        # load_fannie(limit=2)
+        load_fannie(limit=7)
     elif args['download_fannie_mae']:
-        download_fannie_mae()
+        # download_fannie_mae("2021", "Q4")
+        download_fannie_mae("2021", "Q4")
     elif args['download_freddie_mac']:
         download_freddie_mac()
+    elif args['load_freddie_to_db']:
+        load_freddie_to_db()
 
 
 if __name__ == "__main__":

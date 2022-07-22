@@ -1,5 +1,6 @@
 INSERT INTO public.fannie_processed 
-SELECT reference_pool_id,
+SELECT 
+  reference_pool_id,
   loan_id,
   to_date(monthly_reporting_period,'MMYYYY'),
   channel,
@@ -110,6 +111,20 @@ SELECT reference_pool_id,
 FROM public.raw_fannie;
 
 delete from public.raw_fannie;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -- DROP INDEX IF EXISTS idx_loan_id_monthly_raw;
 -- ALTER TABLE raw_fannie SET UNLOGGED;
