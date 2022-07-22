@@ -69,10 +69,11 @@ def main():
     elif args['query_db']:
         query_db()
     elif args['load_fannie']:
-        load_fannie()
+        # load_fannie(start=5, limit=10)
+        load_fannie(start=None, limit=20)
     elif args['load_fannie_sample']:
         # load_fannie(limit=2)
-        load_fannie(limit=7)
+        load_fannie(limit=3)
     elif args['download_fannie_mae']:
         # download_fannie_mae("2021", "Q4")
         download_fannie_mae("2021", "Q4")

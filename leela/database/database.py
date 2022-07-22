@@ -163,7 +163,7 @@ class Database:
         pass
 
     @staticmethod
-    def get_raw_data(start_date, end_date=None, filter=None, ascending=False, DEBUG=False):
+    def get_raw_data(start_date, end_date=None, filter=None, ascending=False, DEBUG=False, limit=None):
         # connection = psycopg.connect(config.POSTGRES_DB_NAME)
         # connection.row_factory = psycopg.Row
 
@@ -189,7 +189,10 @@ class Database:
         if filter is not None:
             sql += " and " + filter
 
-        sql += f" order by monthly_reporting_period {date_order_sql};"
+        sql += f" order by monthly_reporting_period {date_order_sql}"
+        
+        if limit is not None:
+            sql += f" limit {limit}"
         
         if DEBUG:
             print(sql)
@@ -200,8 +203,8 @@ class Database:
         return res
 
     @staticmethod
-    def get_model_input(start, end=None, my_filter=None, scaled=False, DEBUG=False):
-        df = Database.get_raw_data(start, end, my_filter, DEBUG=DEBUG)
+    def get_model_input(start, end=None, my_filter=None, scaled=False, DEBUG=False, limit=None):
+        df = Database.get_raw_data(start, end, my_filter, DEBUG=DEBUG, limit=limit)
         
         # ------------------------- # 
         # Add Additional Features ->

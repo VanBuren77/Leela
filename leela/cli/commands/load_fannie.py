@@ -11,7 +11,7 @@ import leela.config.config as config
 
 # import psycopg
 
-def load_fannie(limit=None):
+def load_fannie(start=None, limit=None):
 
     db_name = "agency-loan-level"
     process_sql_file = "C:\Projects\GitHub\Leela\leela\database\sql\load_fannie.sql"
@@ -22,13 +22,16 @@ def load_fannie(limit=None):
     TEMP_ZIP_OUT_DIR = r"data\Fannie\temp"
     DEBUG = True
     
-    MAX_FILE_LOAD = 21
+    MAX_FILE_LOAD = 1000
     FILE_LOAD_COUNTER = 0
     file_list = os.listdir(DATA_DIR)
     file_list.reverse()
 
     if limit != None:
         file_list = file_list[:limit]
+    
+    if start != None:
+        file_list = file_list[start:]
 
     for file_name in file_list:
 
