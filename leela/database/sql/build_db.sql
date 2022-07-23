@@ -333,7 +333,9 @@ CREATE TABLE fannie_processed (
   repurchase_make_whole_proceeds_flag text,
   alternative_delinq_resolution text,
   alternative_delinq_resolution_count numeric,
-  total_deferral_amount numeric
+  total_deferral_amount numeric,
+  CONSTRAINT my_constraint
+  PRIMARY KEY (monthly_reporting_period, loan_id)
 );
 
 -- CREATE INDEX idx_loan_id_monthly_raw ON raw_fannie (loan_id, monthly_reporting_period DESC);
@@ -344,6 +346,14 @@ CREATE OR REPLACE FUNCTION cpr(numeric) RETURNS numeric
   LANGUAGE SQL
   IMMUTABLE
   RETURNS NULL ON NULL INPUT;
+
+
+-- CREATE OR REPLACE FUNCTION smm(numeric) RETURNS numeric
+--   AS 'SELECT (1.0 - pow(1.0 - $1, 12)) * 100'
+--   LANGUAGE SQL
+--   IMMUTABLE
+--   RETURNS NULL ON NULL INPUT;
+
 
 CREATE TABLE agencies (
   id integer primary key,

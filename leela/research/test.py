@@ -15,9 +15,10 @@ from leela.database.database import Database
 #         # 86-110k MLB
 #         # 0-85k LLB
 #
-# -------------------------- #
+#
+# ---------------------------------------------------- #
 # Results ->
-# -------------------------- #
+# ---------------------------------------------------- #
 #  2017-01-01               |   186457
 #  2017-02-01               |   334384
 #  2017-03-01               |   487648
@@ -91,10 +92,14 @@ from leela.database.database import Database
 #  and original_loan_term = 360.0
 #  --group by loan_purpose;
 
+
+
+
 def main():
     start_date = "2021-03-01"
     filter = "original_interest_rate >= 2.5 and original_interest_rate < 3.5"
     filter += " and 201000 < original_upb and  225000 > original_upb"
+    filter += " and 15000 < current_actual_upb"
     filter += " and loan_age < 180"
     filter += " and oltv <= 95 and oltv > 75"
     filter += " and original_loan_term = 360.0"
@@ -102,6 +107,7 @@ def main():
     data = Database.get_model_input(start_date, my_filter=filter, DEBUG=True, limit=500000)
     print(data)
     print(len(data))
+
 
     # Type here ->
     data.to_csv(r"C:\Projects\GitHub\Leela\leela\research\Nikita\data\30_yr.csv")
