@@ -21,3 +21,8 @@ class Utils:
         for index, row in SOURCE.iterrows():       
             sql_texts.append('INSERT INTO '+TARGET+' ('+ str(', '.join(SOURCE.columns))+ ') VALUES '+ str(tuple(row.values)))        
         return sql_texts
+
+
+    @staticmethod
+    def get_sample_data():
+        return pd.DataFrame(np.random.randint(0,100,size=(100, 4)), columns=list('ABCD'))

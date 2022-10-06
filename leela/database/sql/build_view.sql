@@ -7,6 +7,7 @@ where monthly_reporting_period >= '2021-03-01'
     and original_interest_rate < 3.5
     and 201000 < original_upb
     and 225000 > original_upb
+    and 225000 > ac
     and loan_age < 180
     and oltv <= 95
     and oltv > 75

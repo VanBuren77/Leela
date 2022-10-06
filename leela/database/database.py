@@ -50,6 +50,7 @@ from dateutil import parser
 # )
 
 import psycopg2
+
 class Database:
 
     @staticmethod
@@ -60,10 +61,10 @@ class Database:
         print("-----------------------------")
         
         connection = psycopg2.connect(user=config.POSTGRES_USER,
-                                        password=config.POSTGRES_PW,
-                                        host=config.POSTGRES_HOST,
-                                        port=config.POSTGRES_PORT,
-                                        database=config.POSTGRES_DB_NAME)
+                                      password=config.POSTGRES_PW,
+                                      host=config.POSTGRES_HOST,
+                                      port=config.POSTGRES_PORT,
+                                      database=config.POSTGRES_DB_NAME)
         
         if DEBUG:
             pprint.pprint(connection.get_dsn_parameters())
@@ -164,27 +165,13 @@ class Database:
 
     @staticmethod
     def get_raw_data(start_date, end_date=None, filter=None, ascending=False, DEBUG=False, limit=None):
-        # connection = psycopg.connect(config.POSTGRES_DB_NAME)
-        # connection.row_factory = psycopg.Row
 
         if ascending:
             date_order_sql = "asc"
         else:
             date_order_sql = "desc"
 
-        # "where monthly_reporting_period > = {start_date}"""
-        # select count(*) from fannie_processed where monthly_reporting_period >= '2021-03-01';
-        # 108,166,456
-        # select count(*) fannie_processed where monthly_reporting_period >= '2021-03-01'  and original_interest_rate is between 2.5 and 4.5 desc;
-        # select count(*) from fannie_processed where monthly_reporting_period >= '2021-03-01' and original_interest_rate >= 2.5 and original_interest_rate <= 4.5;"
-        # 92,868,179
         sql = f"""select * from fannie_processed where monthly_reporting_period >= '{start_date}' """
-        # 201-225k
-        # 176-200k
-        # 151-175k
-        # 111-150k HLB
-        # 86-110k MLB
-        # 0-85k LLB
 
         if filter is not None:
             sql += " and " + filter
@@ -209,12 +196,29 @@ class Database:
         # ------------------------- # 
         # Add Additional Features ->
         # ------------------------- #
-
-
-
         return df
 
     @staticmethod
     def query_db(sql):
         res = pd.read_sql_query(sql, Database.get_connection())
         return res
+
+
+
+
+
+# 201-225k
+# 176-200k
+# 151-175k
+# 111-150k HLB
+# 86-110k MLB
+# 0-85k LLB
+
+
+
+# "where monthly_reporting_period > = {start_date}"""
+# select count(*) from fannie_processed where monthly_reporting_period >= '2021-03-01';
+# 108,166,456
+# select count(*) fannie_processed where monthly_reporting_period >= '2021-03-01'  and original_interest_rate is between 2.5 and 4.5 desc;
+# select count(*) from fannie_processed where monthly_reporting_period >= '2021-03-01' and original_interest_rate >= 2.5 and original_interest_rate <= 4.5;"
+# 92,868,179

@@ -110,8 +110,14 @@ SELECT
   total_deferral_amount
 FROM public.raw_fannie;
 
+
+
+
 delete from public.raw_fannie;
 
+
+
+CREATE OR REPLACE INDEX 
 
 
 

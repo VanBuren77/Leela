@@ -24,7 +24,6 @@ Options:
     --full
 """
 
-
 import os
 from docopt import docopt
 
@@ -68,12 +67,19 @@ def main():
         delete_db()
     elif args['query_db']:
         query_db()
+    # elif args['build_model']:
+        # pass
+        # build_model("empirical s-curve")
+    # elif args['run_model']:
+        # pass
+        # run_model("empirical s-curve")
+        # run_model("stacked_nn")
     elif args['load_fannie']:
         # load_fannie(start=5, limit=10)
-        load_fannie(start=None, limit=20)
+        load_fannie(start=None, file_limit=20)
     elif args['load_fannie_sample']:
         # load_fannie(limit=2)
-        load_fannie(limit=3)
+        load_fannie(file_limit=1)
     elif args['download_fannie_mae']:
         # download_fannie_mae("2021", "Q4")
         download_fannie_mae("2021", "Q4")
@@ -97,3 +103,21 @@ if __name__ == "__main__":
         print("DEBUG TEST")
     else:
         main()
+
+# Potential MBS asset breakdown:
+# CRT1, CRT1JM
+# CRT2, CRT2JM
+# Fn15, Fn15JM
+# Fn30, Fn30JM
+# Fn51, Fn51
+# Fn71, Fn71
+# fndus
+# Gn15
+# Gnii15jm
+# gn30, gn30ii
+# gn31, gn51, gn71
+# gnmarm
+# mtgrate
+# na, alta arm,21,31,51...
+# na, alta ioarm, 21,31,51...
+# 

@@ -11,6 +11,7 @@ C:\Projects\GitHub\Leela\leela\research\Nikita\data\*
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
 
 # C extensions
 *.so
